@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "electron:dev": "electron .",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "start": "serve -s dist"
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
