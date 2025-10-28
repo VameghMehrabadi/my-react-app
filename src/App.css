@@ -1,0 +1,466 @@
+/* --- استایل‌های اصلی برنامه --- */
+.app-container {
+    direction: rtl;
+    text-align: right;
+    padding: 20px;
+    font-family: 'YekanBakh', Tahoma, sans-serif;
+    min-height: 100vh;
+    border-radius: 50px;
+    /* Glassmorphism */
+    background-color: rgba(244, 247, 246, 0.2);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); 
+}
+
+h1 {
+    color: #333;
+    border-bottom: 2px solid #00a8a8;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- چیدمان اصلی --- */
+.main-layout {
+    display: flex;
+    gap: 20px;
+}
+
+/* --- دکمه‌های عمومی (هم‌استایل با دکمه PDF) --- */
+.action-button {
+    padding: 10px 18px;
+    background-color: rgba(0, 168, 168, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    color: white;
+    border-radius: 8px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+    text-align: center;
+    font-family: 'YekanBakh', Tahoma, sans-serif;
+}
+
+.action-button:hover {
+    background-color: rgba(0, 168, 168, 0.7);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+.sidebar {
+    width: 300px;
+    padding: 15px;
+    flex-shrink: 0; 
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(160, 160, 160, 0.5);
+}
+
+.canvas-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas-area h2 {
+    color: #005f5f;
+    margin-bottom: 10px;
+}
+
+/* --- استایل نوار جستجو (شیک) --- */
+.search-bar {
+    margin-bottom: 20px;
+}
+
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 12px 18px;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+    font-size: 1em;
+    box-sizing: border-box;
+    text-align: right;
+    color: #333;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: 'YekanBakh', Tahoma, sans-serif; 
+}
+
+.search-bar input[type="text"]:focus {
+    border-color: #00a8a8;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 168, 168, 0.2);
+}
+
+/* --- استایل تب‌های دسته‌بندی (شیک و گرد) --- */
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-family: 'YekanBakh', Tahoma, sans-serif;
+}
+
+/* --- استایل ورودی عددی (برای ست و تکرار) --- */
+.styled-input-number {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 1.2em;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+              box-shadow 0.2s ease;
+  width:60px;
+  height: 25px;
+  text-align: center;
+  font-family: 'YekanBakh', Tahoma, sans-serif;
+}
+
+
+.styled-input-number:focus {
+  outline: none;
+  border-color: #00a8a8;
+  box-shadow: 0 0 8px rgba(0, 168, 168, 0.25);
+  background-color: #ffffff;
+}
+
+.styled-input-number:hover {
+  background-color: #e8e8e8;
+}
+
+/* استایل مشترک دکمه‌ها */
+.app-button {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  font-family: 'YekanBakh', Tahoma, sans-serif;
+
+}
+
+.app-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* استایل مشترک select */
+.app-select {
+  background-color: #f0f0f0;
+  color: #555;
+  border: 1px solid #e0e0e0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  font-family: 'YekanBakh', Tahoma, sans-serif;
+}
+
+
+.tab-button {
+    background-color: #f0f0f0;
+    color: #555;
+    border: 1px solid #e0e0e0;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    flex-grow: 0; 
+    flex-shrink: 0; 
+    font-family: 'YekanBakh', Tahoma, sans-serif;
+}
+
+.tab-button:hover:not(.active) {
+    background-color: #e5e5e5;
+    color: #333;
+}
+
+.tab-button.active {
+    background-color: #00a8a8; 
+    color: white;
+    border-color: #00a8a8;
+    box-shadow: 0 2px 5px rgba(0, 168, 168, 0.3);
+}
+
+.move-item {
+    background-color: #e8f8f8;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border-right: 4px solid #00a8a8;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.move-category {
+    font-size: 0.8em;
+    color: #555;
+    margin-left: 5px;
+}
+
+/* --- جدول زمان‌بندی هفتگی --- */
+.schedule-grid-container {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 30px; 
+}
+
+.day-drop-target {
+    min-height: 140px;
+    padding: 20px;
+    border-radius: 12px;
+    transition: all 0.3s ease-in-out;
+    background-color: #ffffff; 
+    text-align: right;
+    width: 100%; 
+    box-sizing: border-box;
+    border: 3px dashed #b3e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+}
+
+.day-drop-target.is-over { 
+    background-color: #e6f7f7;
+    border-color: #00a8a8;
+    box-shadow: 0 4px 15px rgba(0, 168, 168, 0.2);
+}
+
+.day-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #005f5f;
+    margin-bottom: 0; 
+    border-bottom: none; 
+    padding-bottom: 0;
+}
+
+.day-moves-container {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* --- حرکات اضافه شده در روز --- */
+.selected-move-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    background-color: #ffffff;
+    border-right: 5px solid #ff7f50;
+    border-radius: 4px;
+    font-size: 1.2em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    line-height: 1.4;
+}
+
+/* کانتینر جزئیات حرکت - فلکس باکس برای جابجایی ست/تکرار */
+.move-details {
+    flex-grow: 1;
+    text-align: right;
+    font-weight: normal;
+    display: flex; /* فعال کردن فلکس باکس */
+    justify-content: space-between; /* جدا کردن نام از ست/تکرار */
+    align-items: center;
+}
+
+/* کانتینر ست و تکرار (در سمت چپ آیتم حرکت) */
+.move-props-container {
+    text-align: left; /* چپ چین */
+    color: #555;
+    font-size: 0.9em;
+    margin-right: 15px; 
+}
+
+.order-number {
+    font-weight: bold;
+    color: #ff7f50;
+    margin-left: 5px;
+}
+
+/* --- دکمه PDF (Glassmorphism) --- */
+.pdf-button {
+    padding: 12px 20px;
+    background-color: rgba(0, 168, 168, 0.5);
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    border: 1px solid rgba(255, 255, 255, 0.4); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+    color: white; 
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.pdf-button:hover {
+    background-color: rgba(0, 168, 168, 0.7); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- استایل‌های آکاردئون --- */
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.collapse-btn {
+    background: none;
+    border: none;
+    color: #00a8a8;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 5px;
+    margin-left: 10px;
+}
+
+.day-drop-target.collapsed {
+    min-height: 70px;
+    padding-top: 10px; 
+    padding-bottom: 10px;
+}
+
+
+/* ... استایل‌های عادی برنامه در بالا ... */
+
+/* ###################################################### */
+/* --- بلوک نهایی @media print برای درشت‌تر شدن فوق‌العاده متن در PDF --- */
+/* ###################################################### */
+@media print {
+    
+    /* ۱. حذف عناصر غیرضروری (سایدبار، دکمه‌ها، آکاردئون‌ها، جستجو) */
+    .sidebar, .pdf-button, h1, h2, .collapse-btn, .collapsed-summary, .remove-btn,
+    .search-bar, .category-tabs {
+        display: none !important;
+    }
+
+    /* ۲. بازنشانی چیدمان‌های اصلی برای فضای کامل صفحه */
+    .app-container, .main-layout, .canvas-area {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: #fff !important; 
+        backdrop-filter: none !important;
+        box-shadow: none !important; 
+        border: none !important;
+    }
+
+    /* ۳. اعمال زوم و افزایش فونت پایه روی کانتینر اصلی جدول */
+    .schedule-grid-container {
+        /* 💥💥 زوم کلی به حداکثر برای گنده شدن فوق‌العاده کل محتوا */
+        transform: scale(2.0); /* 💡 افزایش از 1.7 به 2.0 */
+        transform-origin: top right; /* زوم از بالا-راست شروع می‌شود */
+        
+        /* 💥💥 فونت پایه خیلی بزرگتر برای همه متن‌های داخلی */
+        font-size: 30px !important; /* 💡 افزایش از 26px به 30px */
+        line-height: 1.5 !important; 
+        
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important; 
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important; 
+    }
+
+    /* ۴. استایل‌های خاص برای محتوای درون جدول (درشت‌تر) */
+    
+    .day-title {
+        font-size: 1.8em !important; /* عنوان روز (حدود ۵۴ پیکسل) */
+        font-weight: bold !important;
+        color: #000 !important;
+        border-bottom: 4px solid #000 !important;
+        padding-bottom: 10px !important; 
+        margin-bottom: 20px !important; 
+    }
+    
+    .selected-move-item {
+        font-size: 1em !important; /* اندازه نسبی داخل آیتم، با توجه به 30px اصلی */
+        padding: 15px 12px !important; 
+        margin-bottom: 12px !important; 
+        border-right: 8px solid #ff7f50 !important; 
+    }
+
+    /* چیدمان فلکس برای جابجایی ست و تکرار */
+    .move-details {
+        font-size: 1.2em !important; 
+        color: #333 !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    
+    /* ست و تکرار در سمت چپ پرینت */
+    .move-props-container {
+        text-align: left !important;
+        font-size: 0.9em !important; 
+        color: #555 !important;
+        margin-right: 20px !important;
+    }
+    
+    .move-name-print {
+        font-weight: bold !important;
+    }
+
+    .order-number {
+        font-size: 1.1em !important;
+        color: #ff7f50 !important;
+        margin-left: 10px !important;
+    }
+
+    /* ۵. اطمینان از شکست صفحه صحیح و خوانایی */
+    .day-drop-target {
+        width: 100% !important;
+        min-height: auto !important;
+        margin-bottom: 40px !important;
+        border: 2px solid #000 !important;
+        box-shadow: none !important; 
+        background-color: #ffffff !important;
+        padding: 25px !important;
+        page-break-inside: avoid; 
+    }
+    
+    .day-drop-target.collapsed .day-moves-container {
+        display: block !important; 
+    }
+    .day-drop-target.collapsed {
+        min-height: auto !important;
+    }
+}

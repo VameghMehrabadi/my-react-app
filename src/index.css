@@ -1,0 +1,312 @@
+/* --- فونت سفارشی (حتما مسیرها را بررسی کنید) --- */
+@font-face {
+  font-family: 'YekanBakh';
+  /* مسیردهی باید از ریشه (/) شروع شود، چون فایل در public/fonts قرار دارد */
+  src: url('/fonts/YekanBakh-Black.woff2') format('woff2'),
+       url('/fonts/YekanBakh-Black.woff') format('woff'),
+       url('/fonts/YekanBakh-Black.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* --- استایل‌های اصلی برنامه --- */
+body {
+    margin: 0;
+    font-family: 'YekanBakh', Tahoma, Arial, sans-serif;
+    direction: rtl;
+    text-align: right;
+    /* تنظیمات فونت-اسموثینگ برای نمایش بهتر فونت در مرورگرهای مختلف */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+    padding: 20px;
+    background-color: #f4f7f6;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #333;
+    border-bottom: 2px solid #00a8a8;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- چیدمان اصلی (لیست حرکات + جدول) --- */
+.main-layout {
+    display: flex; 
+    gap: 20px;
+}
+
+/* --- ستون کناری (Sidebar) با افکت شیشه مات (Glassmorphism) --- */
+.sidebar {
+    width: 300px;
+    padding: 15px;
+    flex-shrink: 0; 
+    border-radius: 12px; 
+    
+    /* افکت شیشه مات */
+    background-color: rgba(255, 255, 255, 0.5); /* سفید با شفافیت ۵۰٪ */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); 
+}
+
+.canvas-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.canvas-area h2 {
+    color: #005f5f;
+    margin-bottom: 10px;
+}
+
+/* --- لیست حرکات (ستون کناری) --- */
+.search-bar input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+.category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    background-color: #eee;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tab-button.active {
+    background-color: #00a8a8;
+    color: white;
+}
+
+.move-item {
+    background-color: #e8f8f8;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border-right: 4px solid #00a8a8;
+    cursor: grab;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.move-category {
+    font-size: 0.8em;
+    color: #555;
+    margin-left: 5px;
+}
+
+.no-results {
+    color: #999;
+    text-align: center;
+    padding: 20px;
+}
+
+/* --- جدول زمان‌بندی هفتگی (Drop Targets) --- */
+.schedule-grid-container {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.schedule-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 15px; 
+}
+
+/* --- استایل به روز شده Drop Target --- */
+.day-drop-target {
+    min-height: 140px; 
+    padding: 20px; 
+    border-radius: 12px; 
+    transition: all 0.3s ease-in-out;
+    background-color: #ffffff; 
+    text-align: right;
+    border: 3px dashed #b3e0e0; 
+    width: 100%; 
+    box-sizing: border-box;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+}
+
+/* افکت Drag Over */
+.day-drop-target.is-over { 
+    background-color: #e6f7f7;
+    border-color: #00a8a8;
+    box-shadow: 0 4px 15px rgba(0, 168, 168, 0.2);
+}
+
+.day-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #005f5f;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 8px;
+}
+
+.day-placeholder {
+    color: #a0a0a0;
+    font-style: italic;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1em;
+}
+
+.day-moves-container {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* --- حرکات اضافه شده در روز --- */
+.selected-move-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px; 
+    margin-bottom: 8px; 
+    background-color: #ffffff;
+    border-right: 5px solid #ff7f50; 
+    border-radius: 4px;
+    font-size: 1.2em; 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    line-height: 1.4;
+}
+
+.move-details {
+    flex-grow: 1;
+    text-align: right;
+    font-weight: normal;
+    font-size: 0.95em; 
+}
+
+.move-props {
+    color: #555;
+    font-size: 0.85em; 
+}
+
+.order-number {
+    font-weight: bold;
+    color: #ff7f50;
+    margin-left: 5px;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #ff7f50;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-right: 5px;
+    transition: color 0.2s;
+}
+
+.remove-btn:hover {
+    color: #cc6540;
+}
+
+/* --- دکمه PDF با افکت شیشه مات --- */
+.pdf-button {
+    padding: 12px 20px;
+    /* افکت شیشه مات */
+    background-color: rgba(0, 168, 168, 0.5); 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px); 
+    border: 1px solid rgba(255, 255, 255, 0.4); 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1) inset; 
+    
+    color: white; 
+    border-radius: 8px; 
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.2s; 
+    margin-top: 10px;
+    width: 100%;
+}
+
+.pdf-button:hover {
+    background-color: rgba(0, 168, 168, 0.7); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* ###################################################### */
+/* --- اصلاحات کلیدی برای خروجی PDF (مهم برای حل مشکل شما) --- */
+/* ###################################################### */
+@media print {
+    
+    /* ۱. حذف عناصر غیرضروری برای پرینت */
+    .sidebar, .pdf-button, h1, h2 {
+        display: none !important;
+    }
+
+    /* ۲. بازنشانی چیدمان‌های پیچیده به حالت ساده (Block) */
+    .app-container, .main-layout, .canvas-area {
+        display: block !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background-color: #fff !important; 
+    }
+    
+    /* ۳. اصلاح Grid و Flex به Block */
+    .schedule-grid-container,
+    .schedule-grid {
+        display: block !important;
+        width: 100% !important;
+        /* حاشیه‌ها را صفر می‌کنیم تا فضای A4 کاملاً استفاده شود */
+        padding: 0 !important; 
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    /* ۴. تضمین عدم شکستن روزهای تمرینی بین صفحات */
+    .day-drop-target {
+        width: 100% !important;
+        min-height: auto !important;
+        margin-bottom: 20px !important;
+        /* مرزهای ساده و حذف افکت‌های گرافیکی */
+        border: 1px solid #ccc !important; 
+        box-shadow: none !important; 
+        background-color: #ffffff !important;
+        padding: 15px !important;
+        
+        /* **مهم:** از شکستن روز در مرز صفحات جلوگیری می‌کند */
+        page-break-inside: avoid; 
+    }
+    
+    /* ۵. حذف دکمه حذف از خروجی PDF */
+    .remove-btn {
+        display: none !important;
+    }
+    
+    /* ۶. اعمال فونت برای خروجی چاپی */
+    .app-container, body {
+        font-family: 'YekanBakh', Tahoma, sans-serif !important;
+    }
+}
