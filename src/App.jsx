@@ -376,11 +376,17 @@ const DayDropTarget = ({ day, moves, onDropMove, onRemoveItem, onUpdateMoveValue
           ) : (
             <div className="day-moves-container">
               {moves.map((item, index) => {
+                // 🔸 SINGLE MOVE SECTION 🔸
                 if (item.type === "single") {
+                  const setsCount = Number(item.sets);
+                  const currentRepsArray = Array.isArray(item.reps) ? item.reps.map(String) : Array(setsCount).fill("");
+
+                  // مطمئن می‌شویم همیشه آرایه هم‌طول با ست‌ها داریم
+                  while (currentRepsArray.length < setsCount) currentRepsArray.push("");
+
                   return (
                     <div key={item.instanceId} className="selected-move-item">
                       <span className="order-number">{index + 1}.</span>
-
                       <div className="move-details">
                         <div style={{ flex: 1 }}>
                           <div className="move-name-print">
@@ -388,130 +394,169 @@ const DayDropTarget = ({ day, moves, onDropMove, onRemoveItem, onUpdateMoveValue
                           </div>
                         </div>
 
-                        <div className="move-props-container">
-                          <label style={{ marginLeft: 8 }}>
+                        <div
+                          className="move-props-container"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "flex-end",
+                            gap: 12,
+                          }}
+                        >
+                          {/* فیلدهای تکرار */}
+                          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                            {currentRepsArray.map((repValue, repIdx) => (
+                              
+                              <input
+                                key={item.reps}
+                                type="number"
+                                min="0"
+                                value={item.value}
+
+                                style={{
+                                  width: 60,
+                                  height: 35,
+                                  borderRadius: 10,
+                                  border: "1px solid #ccc",
+                                  textAlign: "center",
+                                  fontSize: 14,
+                                  font:'YekanBakh'
+                                }}
+                              />
+                            ))}
+                          </div>
+
+                          {/* فیلد ست */}
+                          <label style={{ display: "flex", alignItems: "center", gap: 4 }}>
                             ست:
                             <input
                               type="number"
                               min="0"
                               value={item.sets ?? ""}
-                              onChange={(e) =>
-                                onUpdateMoveValues(day, item.instanceId, {
-                                  sets: e.target.value === "" ? "" : parseInt(e.target.value),
-                                })
-                              }
-                              style={{width: 60,
-                                    marginRight: 6,
-                                    backgroundColor: "#f0f0f0",
-                                    color: "#555",
-                                    border: "1px solid #e0e0e0",
-                                    padding: "8px 14px",
-                                    borderRadius: 20,
-                                    cursor: "pointer",
-                                    fontSize: "1.2em",
-                                    fontWeight: 500,
-                                    height:25,
-                                    transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
-                                    fontFamily:'YekanBakh',
-                                    flexGrow: 0,
-                                    flexShrink: 0,}}
-                            />
-                          </label>
-                          <label>
-                            تکرار:
-                            <input
-                              type="number"
-                              min="0"
-                              value={item.reps ?? ""}
-                              onChange={(e) =>
-                                onUpdateMoveValues(day, item.instanceId, {
-                                  reps: e.target.value === "" ? "" : parseInt(e.target.value),
-                                })
-                              }
+                              onChange={(e) => {
+                                const newSets = e.target.value === "" ? "" : Number(e.target.value);
+                                let newRepsArray = Array.isArray(item.reps) ? [...item.reps] : [];
+                                if (typeof newSets === "number" && newSets >= 0) {
+                                  newRepsArray.length = newSets;
+                                  for (let i = 0; i < newSets; i++) {
+                                    if (newRepsArray[i] === undefined) newRepsArray[i] = "";
+                                  }
+                                } else {
+                                  newRepsArray = [];
+                                }
+                                onUpdateMoveValues(day, item.instanceId, { sets: newSets, reps: newRepsArray });
+                              }}
                               style={{
-                                    width: 60,
-                                    marginRight: 6,
-                                    backgroundColor: "#f0f0f0",
-                                    color: "#555",
-                                    border: "1px solid #e0e0e0",
-                                    padding: "8px 14px",
-                                    borderRadius: 20,
-                                    cursor: "pointer",
-                                    fontSize: "1.2em",
-                                    fontWeight: 500,
-                                    height:25,
-                                    transition: "background-color 0.2s, color 0.2s, border-color 0.2s",
-                                    flexGrow: 0,
-                                    fontFamily:'YekanBakh',
-                                    flexShrink: 0,}}
+                                width: 60,
+                                height: 35,
+                                borderRadius: 20,
+                                border: "1px solid #ccc",
+                                textAlign: "center",
+                                fontSize: 14,
+                              }}
                             />
                           </label>
                         </div>
                       </div>
 
-                      <button className="remove-btn" onClick={() => onRemoveItem(day, item.instanceId)}>
-                        ✖
-                      </button>
+                      <button className="remove-btn" onClick={() => onRemoveItem(day, item.instanceId)}>✖</button>
                     </div>
                   );
-                } else if (item.type === "superset") {
-                  // سوپرست: نمایش هر حرکت داخل کارت سوپرست
+                }
+
+                // 🔹 SUPERSET SECTION 🔹
+                if (item.type === "superset") {
                   return (
-                    <div key={item.instanceId} className="selected-move-item" style={{ flexDirection: "column", alignItems: "stretch", borderRight: "5px solid #00a8a8" }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                    <div
+                      key={item.instanceId}
+                      className="selected-move-item"
+                      style={{ flexDirection: "column", alignItems: "stretch", borderRight: "5px solid #00a8a8" }}
+                    >
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                         <strong>🔥 سوپرست</strong>
-                        <button className="remove-btn" onClick={() => onRemoveItem(day, item.instanceId)}>
-                          ✖
-                        </button>
+                        <button className="remove-btn" onClick={() => onRemoveItem(day, item.instanceId)}>✖</button>
                       </div>
 
                       <div className="day-moves-container" style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                        {item.moves.map((mv, idx) => (
-                          <div key={mv.instanceId} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                              <span style={{ fontWeight: 700 }}>{idx + 1}. {mv.name}</span>
-                            </div>
+                        {item.moves.map((mv, idx) => {
+                          const setsCount = Number(mv.sets) || 0;
+                          const currentRepsArray = Array.isArray(mv.reps) ? mv.reps.map(String) : Array(setsCount).fill("");
+                          while (currentRepsArray.length < setsCount) currentRepsArray.push("");
 
-                            <div className="move-props-container">
-                              <label style={{ marginLeft: 8 }}>
-                                ست:
-                                <input
+                          return (
+                            <div key={mv.instanceId} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                                <span style={{ fontWeight: 700 }}>{idx + 1}. {mv.name}</span>
+                              </div>
+
+                              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                {/* تکرار */}
+                                <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                                  {currentRepsArray.map((repValue, repIdx) => (
+                                    <input
+                                      key={repIdx}
+                                      type="number"
+                                      min="0"
+                                      value={repValue}
+                                      onChange={(e) => {
+                                        const val = e.target.value;
+                                        const newRepsArray = Array.isArray(mv.reps) ? [...mv.reps] : [];
+                                        while (newRepsArray.length <= repIdx) newRepsArray.push("");
+                                        newRepsArray[repIdx] = val === "" ? "" : Number(val);
+                                        onUpdateMoveValues(day, item.instanceId, { supersetMoveInstanceId: mv.instanceId, reps: newRepsArray });
+                                      }}
+                                      style={{
+                                        width: 60,
+                                        height: 35,
+                                        borderRadius: 10,
+                                        border: "1px solid #ccc",
+                                        textAlign: "center",
+                                        fontSize: 14,
+                                      }}
+                                    />
+                                  ))}
+                                </div>
+
+                                {/* ست */}
+                                <label style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                                  ست:
+                                  <input
                                     type="number"
                                     min="0"
                                     value={mv.sets ?? ""}
-                                    onChange={(e) =>
-                                        onUpdateMoveValues(day, item.instanceId, {
-                                        supersetMoveInstanceId: mv.instanceId,
-                                        sets: e.target.value === "" ? "" : parseInt(e.target.value),
-                                        })
-                                    }
-                                    className="styled-input-number"
-                            />
-
-                              </label>
-                              <label>
-                                تکرار:
-                                <input
-                                    type="number"
-                                    min="0"
-                                    value={mv.reps ?? ""}
-                                    onChange={(e) =>
-                                        onUpdateMoveValues(day, item.instanceId, {
-                                        supersetMoveInstanceId: mv.instanceId,
-                                        reps: e.target.value === "" ? "" : parseInt(e.target.value),
-                                        })
-                                    }
-                                    className="styled-input-number"
-                                />
-
-                              </label>
+                                    onChange={(e) => {
+                                      const newSets = e.target.value === "" ? "" : Number(e.target.value);
+                                      let newRepsArray = Array.isArray(mv.reps) ? [...mv.reps] : [];
+                                      if (typeof newSets === "number" && newSets >= 0) {
+                                        newRepsArray.length = newSets;
+                                        for (let i = 0; i < newSets; i++) {
+                                          if (newRepsArray[i] === undefined) newRepsArray[i] = "";
+                                        }
+                                      } else {
+                                        newRepsArray = [];
+                                      }
+                                      onUpdateMoveValues(day, item.instanceId, { supersetMoveInstanceId: mv.instanceId, sets: newSets, reps: newRepsArray });
+                                    }}
+                                    style={{
+                                      width: 60,
+                                      height: 35,
+                                      borderRadius: 20,
+                                      border: "1px solid #ccc",
+                                      textAlign: "center",
+                                      fontSize: 14,
+                                    }}
+                                  />
+                                </label>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   );
-                } else return null;
+                }
+
+                return null;
               })}
             </div>
           )}
@@ -522,6 +567,7 @@ const DayDropTarget = ({ day, moves, onDropMove, onRemoveItem, onUpdateMoveValue
     </div>
   );
 };
+
 
 // ---------- PDF Generator (از schedule رندر می‌گیرد) ----------
 const PDFGenerator = ({ targetRef }) => {
@@ -691,12 +737,36 @@ export default function App() {
         if (item.type === "single") {
           return {
             ...item,
-            sets: payload.sets !== undefined ? payload.sets : item.sets,
-            reps: payload.reps !== undefined ? payload.reps : item.reps,
+            sets: payload.sets !== undefined && payload.sets !== ""
+              ? parseInt(payload.sets)
+              : item.sets,
+            reps: payload.reps !== undefined && payload.reps !== ""
+              ? parseInt(payload.reps)
+              : item.reps,
           };
+          //سوپر ست حالت
         } else if (item.type === "superset") {
           const updatedMoves = item.moves.map((mv) => {
             if (mv.instanceId !== payload.supersetMoveInstanceId) return mv;
+
+            let newSets =
+            payload.sets !== undefined && payload.sets !== ""
+              ? parseInt(payload.sets)
+              : mv.sets;
+            if (isNaN(newSets) || newSets < 0) newSets = 0;
+            // مقدار فعلی تکرارها
+            let newRepsArray = Array.isArray(mv.reps) ? [...mv.reps] : [];
+            if (Array.isArray(payload.reps)) {
+            newRepsArray = [...payload.reps];
+            }else{
+            const oldLength = newRepsArray.length;
+            newRepsArray.length = newSets;
+            // اگر ست زیاد شد، خانه‌های جدید خالی اضافه می‌کنیم
+            for (let i = oldLength; i < newSets; i++) {
+              newRepsArray = "";
+            }
+          }
+          
             return {
               ...mv,
               sets: payload.sets !== undefined ? payload.sets : mv.sets,
@@ -711,6 +781,7 @@ export default function App() {
       return copy;
     });
   };
+  
 
   // انتخاب/حذف انتخاب برای سوپرست در سایدبار
   const toggleSelectForSuperset = (move) => {
@@ -920,4 +991,3 @@ export default function App() {
     </DndProvider>
   );
 }
-
